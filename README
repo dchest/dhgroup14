@@ -1,0 +1,11 @@
+Package dhgroup14 implements blinded Diffie-Hellman key agreement with
+2048-bit group #14 modulus from RFC 3526.
+
+INSTALLATION
+
+	go get github.com/dchest/dhgroup14
+
+DOCUMENTATION
+
+	http://godoc.org/github.com/dchest/dhgroup14
+
