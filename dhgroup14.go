@@ -1,6 +1,9 @@
-// Copyright 2013 Dmitry Chestnykh. All rights reserved.
-// Use of this source code is governed by a BSD-style
-// license that can be found in the LICENSE file.
+// Written in 2013 by Dmitry Chestnykh.
+//
+// To the extent possible under law, the author have dedicated all copyright
+// and related and neighboring rights to this software to the public domain
+// worldwide. This software is distributed without any warranty.
+// http://creativecommons.org/publicdomain/zero/1.0/
 
 // Package dhgroup14 implements blinded Diffie-Hellman key agreement with
 // 2048-bit group #14 modulus from RFC 3526.
