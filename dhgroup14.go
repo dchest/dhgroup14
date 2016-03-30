@@ -9,6 +9,7 @@
 // 2048-bit group #14 modulus from RFC 3526. Computations are performed with
 // blinding to avoid timing attacks, and values are plus 2^258.
 //
+// This is the same algorithm used by libcperciva (Tarsnap, spipe, etc.)
 // See http://mail.tarsnap.com/spiped/msg00071.html for details.
 package dhgroup14
 
