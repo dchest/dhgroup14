@@ -6,7 +6,10 @@
 // http://creativecommons.org/publicdomain/zero/1.0/
 
 // Package dhgroup14 implements blinded Diffie-Hellman key agreement with
-// 2048-bit group #14 modulus from RFC 3526.
+// 2048-bit group #14 modulus from RFC 3526. Computations are performed with
+// blinding to avoid timing attacks, and values are plus 2^258.
+//
+// See http://mail.tarsnap.com/spiped/msg00071.html for details.
 package dhgroup14
 
 import (
@@ -63,8 +66,11 @@ func GenerateKeyPair(rand io.Reader) (publicKey, privateKey []byte, err error) {
 	return
 }
 
-// GeneratePublicKey returns a public key corresponding to the given private key.
-// It accepts a random bytes reader to generate blinding during calculation.
+// GeneratePublicKey returns a public key corresponding to the given private
+// key (2^(2^258 + privateKey in group).
+//
+// Random bytes for blinding are read from rand, which must be set to a CSPRNG,
+// such as crypto/rand.Reader.
 func GeneratePublicKey(rand io.Reader, privateKey []byte) (publicKey []byte, err error) {
 	if len(privateKey) != PrivateKeySize {
 		return nil, errors.New("dhgroup14: wrong private key size")
@@ -111,7 +117,8 @@ func blindedModExp(rand io.Reader, a *big.Int, privateKey []byte) ([]byte, error
 	return result, nil
 }
 
-// SharedKey returns a shared key between theirPublicKey and myPrivateKey.
+// SharedKey returns a shared key between theirPublicKey and myPrivateKey
+// (theirPublicKey^(2^258 + myPrivateKey).
 //
 // Random bytes for blinding are read from rand, which must be set to a CSPRNG,
 // such as crypto/rand.Reader.
