@@ -56,12 +56,21 @@ func GenerateKeyPair(rand io.Reader) (publicKey, privateKey []byte, err error) {
 	if _, err := io.ReadFull(rand, privateKey); err != nil {
 		return nil, nil, err
 	}
-	// Create public key: compute 2^(2^258 + privateKey)
-	publicKey, err = blindedModExp(rand, generator, privateKey)
+	publicKey, err = GeneratePublicKey(rand, privateKey)
 	if err != nil {
 		return nil, nil, err
 	}
 	return
+}
+
+// GeneratePublicKey returns a public key corresponding to the given private key.
+// It accepts a random bytes reader to generate blinding during calculation.
+func GeneratePublicKey(rand io.Reader, privateKey []byte) (publicKey []byte, err error) {
+	if len(privateKey) != PrivateKeySize {
+		return nil, errors.New("dhgroup14: wrong private key size")
+	}
+	// Create public key: compute 2^(2^258 + privateKey)
+	return blindedModExp(rand, generator, privateKey)
 }
 
 func blindedModExp(rand io.Reader, a *big.Int, privateKey []byte) ([]byte, error) {

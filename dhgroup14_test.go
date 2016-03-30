@@ -148,6 +148,16 @@ func TestGenerateKey(t *testing.T) {
 	}
 }
 
+func TestGeneratePublicKey(t *testing.T) {
+	publicKey, err := GeneratePublicKey(rand.Reader, golden.privateKey1)
+	if err != nil {
+		t.Fatalf("generating public key: %s", err)
+	}
+	if !bytes.Equal(publicKey, golden.publicKey1) {
+		t.Fatalf("generated wrong public key. Expected: %x, got %x", golden.publicKey1, publicKey)
+	}
+}
+
 func TestSharedKey(t *testing.T) {
 	sharedKey1, err := SharedKey(rand.Reader, golden.publicKey1, golden.privateKey2)
 	if err != nil {
